@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { fetchData } from './service'
 import DayCard from './components/DayCard'
+import './App.css'
 
 function App() {
   const [city, setCity] = useState('')
@@ -13,13 +14,26 @@ function App() {
     setData(response)
   }
 
+  const handlerInput = (e) => {
+    e.target.value = e.target.value.trim().replace(/[Aа-яЯЁё\d\s]+/g, '')
+  }
+
   return (
     <div>
-      <input onChange={(e) => setCity(e.target.value)} />
+      <input
+        onChange={(e) => setCity(e.target.value)}
+        onInput={(e) => handlerInput(e)}
+        placeholder="Enter a City..."
+      />
       <button onClick={() => search()}>Search</button>
-      {data.map((item) => (
-        <DayCard info={item} />
-      ))}
+      <div className="list-cards">
+        {data.map((item, ind) => {
+          if (!ind) return null
+
+          return <DayCard info={item} key={item.dt} />
+        })}
+        {!data.length && <div>Not Found</div>}
+      </div>
     </div>
   )
 }
