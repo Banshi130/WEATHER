@@ -1,15 +1,20 @@
 import React from 'react'
 import './DayCard.css';
-
-export default ({ nameDay = 'nameDay', temp = 'temp' }) => {
+import { days } from '../constants'
+export default ({info }) => {
+  const nameDay = days[new Date(info.dt_txt).getDay()]
+  const weather = info.weather[0].description
   return <div className='next_day'>
     <p >
       {nameDay}
     </p>
     <img src="" alt="" />
     <p className='weekday'>
-      {temp}
+      {weather}
     </p>
    
   </div>
+
+
+
 }
